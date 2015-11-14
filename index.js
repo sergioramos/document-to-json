@@ -1,13 +1,21 @@
+var includes = require('lodash.includes');
+var keys = require('lodash.keys');
+var every = require('lodash.every');
+
 var toJSON = module.exports = function(doc, obj) {
   if (!obj) {
-    obj = {};
+    return toJSON(doc, {});
   }
 
   if (!doc) {
     return obj;
   }
 
-  if (!doc.innerHTML) {
+  var isRoot = every(keys(doc), function(key) {
+    return !includes(['nodeName', 'tagName', 'localName'], key);
+  });
+
+  if (isRoot) {
     return toJSON(doc.firstChild, obj);
   }
 
