@@ -1,14 +1,31 @@
 var includes = require('lodash.includes');
 var keys = require('lodash.keys');
 var every = require('lodash.every');
+var reduce = require('lodash.reduce');
 
-var toJSON = module.exports = function(doc, obj) {
-  if (!obj) {
-    return toJSON(doc, {});
+
+var fromChildNodes = function(doc) {
+  if (!(doc.childNodes && doc.childNodes.length)) {
+    return [];
   }
 
+  return doc.childNodes.map(toJSON);
+};
+
+var fromAttributes = function(doc) {
+  if (!(doc.attributes && doc.attributes.length)) {
+    return [];
+  }
+
+  return reduce(doc.attributes, function(attrs, attr) {
+    attrs[attr.nodeName] = attr.nodeValue;
+    return attrs;
+  }, {});
+};
+
+var toJSON = function(doc) {
   if (!doc) {
-    return obj;
+    return {};
   }
 
   var isRoot = every(keys(doc), function(key) {
@@ -16,46 +33,14 @@ var toJSON = module.exports = function(doc, obj) {
   });
 
   if (isRoot) {
-    return toJSON(doc.firstChild, obj);
+    return toJSON(doc.firstChild);
   }
 
-  var hasNodeList = function() {
-    return (doc.childNodes !== null) && doc.childNodes.length;
-  };
-
-  var hasAttributes = function() {
-    return (doc.attributes !== null) && doc.attributes.length;
-  };
-
-  var fromNodeList = function(nodeList) {
-    return nodeList.map(function(node) {
-      if (node.nodeType === 3) {
-        return node.nodeValue;
-      }
-
-      return toJSON(node);
-    });
-  };
-
-  var fromAttributes = function(attrs) {
-    return attrs.map(function(attr) {
-      return [attr.nodeName, attr.nodeValue];
-    }).reduce(function(attrs, attr) {
-      attrs[attr[0]] = attr[1];
-      return attrs;
-    }, {});
-  };
-
-  obj.type = doc.nodeName;
-
-  if (hasNodeList()) {
-    obj.content = fromNodeList(doc.childNodes);
-    console.log(stringify(obj.content, null, 2));
+  return {
+    name: doc.nodeName,
+    childs: fromChildNodes(doc),
+    attrs: fromAttributes(doc)
   }
-
-  if (hasAttributes()) {
-    obj.attrs = fromAttributes(doc.attributes);
-  }
-
-  return obj;
 };
+
+module.exports = toJSON;
