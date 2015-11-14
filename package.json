@@ -1,13 +1,15 @@
 {
   "name": "document-to-json",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "converts Document into a JSON tree",
   "keywords": [
     "Document",
     "SVGDocument",
     "HTMLDocument",
     "parseFromString",
-    "DOMParser"
+    "DOMParser",
+    "HTML",
+    "JSON"
   ],
   "main": "index.js",
   "author": "Sérgio Ramos <mail@sergioramos.me>",
