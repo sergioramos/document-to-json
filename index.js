@@ -15,7 +15,7 @@ var fromChildNodes = function(doc) {
 
 var fromAttributes = function(doc) {
   if (!(doc.attributes && doc.attributes.length)) {
-    return [];
+    return {};
   }
 
   return reduce(doc.attributes, function(attrs, attr) {
