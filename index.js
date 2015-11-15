@@ -40,7 +40,7 @@ var toJSON = function(doc) {
   });
 
   if (isRoot) {
-    return toJSON(doc.firstChild);
+    return toJSON(doc.lastChild);
   }
 
   return JSON.parse(JSON.stringify({
