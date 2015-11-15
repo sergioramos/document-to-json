@@ -36,7 +36,7 @@ var toJSON = function(doc) {
   }
 
   var isRoot = every(keys(doc), function(key) {
-    return !includes(['nodeName', 'tagName', 'localName'], key);
+    return !includes(['nodeName', 'tagName', 'localName', 'nodeValue'], key);
   });
 
   if (isRoot) {
