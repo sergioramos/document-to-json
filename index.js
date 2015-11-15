@@ -3,6 +3,8 @@ var keys = require('lodash.keys');
 var every = require('lodash.every');
 var reduce = require('lodash.reduce');
 var map = require('lodash.map');
+var isString = require('lodash.isstring');
+var isEmpty = require('lodash.isempty');
 
 
 var fromChildNodes = function(doc) {
@@ -24,6 +26,10 @@ var fromAttributes = function(doc) {
   }, {});
 };
 
+var fromNodeValue = function(doc) {
+  return isString(doc.nodeValue) ? doc.nodeValue : undefined;
+};
+
 var toJSON = function(doc) {
   if (!doc) {
     return {};
@@ -37,11 +43,14 @@ var toJSON = function(doc) {
     return toJSON(doc.firstChild);
   }
 
-  return {
+  return JSON.parse(JSON.stringify({
     name: doc.nodeName,
-    childs: fromChildNodes(doc),
-    attrs: fromAttributes(doc)
-  }
+    childs: fromChildNodes(doc).filter(function(child) {
+      return !isEmpty(child);
+    }),
+    attrs: fromAttributes(doc),
+    value: fromNodeValue(doc)
+  }));
 };
 
 module.exports = toJSON;
