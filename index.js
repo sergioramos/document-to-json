@@ -2,6 +2,7 @@ var includes = require('lodash.includes');
 var keys = require('lodash.keys');
 var every = require('lodash.every');
 var reduce = require('lodash.reduce');
+var map = require('lodash.map');
 
 
 var fromChildNodes = function(doc) {
@@ -9,7 +10,7 @@ var fromChildNodes = function(doc) {
     return [];
   }
 
-  return doc.childNodes.map(toJSON);
+  return map(doc.childNodes, toJSON);
 };
 
 var fromAttributes = function(doc) {

@@ -1,6 +1,6 @@
 {
   "name": "document-to-json",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "converts Document into a JSON tree",
   "keywords": [
     "Document",
@@ -18,6 +18,7 @@
     "lodash.every": "^3.2.3",
     "lodash.includes": "^3.1.3",
     "lodash.keys": "^3.1.2",
+    "lodash.map": "^3.1.4",
     "lodash.reduce": "^3.1.2"
   }
 }
