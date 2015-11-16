@@ -1,6 +1,6 @@
 {
   "name": "document-to-json",
-  "version": "5.0.0",
+  "version": "6.0.0",
   "description": "converts Document into a JSON tree",
   "keywords": [
     "Document",

@@ -45,11 +45,11 @@ var toJSON = function(doc) {
 
   return JSON.parse(JSON.stringify({
     name: doc.nodeName,
+    attrs: fromAttributes(doc),
+    value: fromNodeValue(doc),
     childs: fromChildNodes(doc).filter(function(child) {
       return !isEmpty(child);
-    }),
-    attrs: fromAttributes(doc),
-    value: fromNodeValue(doc)
+    })
   }));
 };
 
